@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Qualities × GPIS: the school disc (orange sky over green land) with the white centre circle, where a two-leaf sprout grows -->
+  <defs>
+    <linearGradient id="o" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F7A43A"/><stop offset="1" stop-color="#F39523"/></linearGradient>
+    <linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1B8F40"/><stop offset="1" stop-color="#126B2E"/></linearGradient>
+  </defs>
+  <rect width="512" height="512" fill="url(#o)"/>
+  <rect y="268" width="512" height="244" fill="url(#g)"/>
+  <path d="M0 410c90-40 170-30 256 0s170 40 256 0v102H0z" fill="#0F5E28" opacity=".55"/>
+  <path d="M0 360c110-34 200-20 300 6s150 20 212-6" stroke="#E9F3DC" stroke-width="7" fill="none" opacity=".55"/>
+  <circle cx="256" cy="268" r="132" fill="none" stroke="#FFF8EC" stroke-width="10" opacity=".55"/>
+  <circle cx="256" cy="268" r="112" fill="#FFFDF7"/>
+  <path d="M256 352V262" stroke="#18873B" stroke-width="15" stroke-linecap="round"/>
+  <path d="M256 286c-4-46-40-74-92-72 2 50 36 76 92 72z" fill="#18873B"/>
+  <path d="M256 302c8-48 46-76 98-72-3 52-41 78-98 72z" fill="#F39523"/>
+  <path d="M256 286c-24-19-46-35-73-49M256 302c24-21 49-37 78-50" stroke="#FFFDF7" stroke-width="5" stroke-linecap="round" fill="none" opacity=".7"/>
+  <path d="M206 352h100" stroke="#18873B" stroke-width="10" stroke-linecap="round" opacity=".35"/>
+</svg>
