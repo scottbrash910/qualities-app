@@ -154,4 +154,5 @@ Q.STUDENTS = names.map((name, i) => ({
   reciteMin: [42, 18, 5, 60, 22, 9, 31, 55, 0, 27, 36, 48, 12, 20, 3, 40, 26, 8, 33, 29][i]
 }));
 Q.PRINCIPAL = { name: 'السيدة مديرة المدرسة', user: 'principal', pass: 'Principal#2026' };
+Q.LEAD = { name: 'أ/ رانيا حسين (مشرفة المشرفين)', user: 'lead', pass: 'Lead#2026' };
 Q.OWNER = { name: 'مسؤول المشروع', user: 'admin', pass: 'Owner#2026' };

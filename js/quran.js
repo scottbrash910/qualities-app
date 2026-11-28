@@ -35,7 +35,7 @@ Q.Quran = (() => {
   }
 
   /* Player: verse list, speed, repeat, gap */
-  function player(onState) {
+  function player(onState, onDone) {
     const a = new Audio(); a.preload = 'auto';
     let list = [], i = 0, rep = 0, opts = { speed: 1, repeat: 1, gap: false, teacher: false }, playing = false, gapT = null;
     const src = () => (opts.teacher ? AUDIO.teacher : AUDIO.normal) + fileOf(list[i]);
@@ -43,6 +43,7 @@ Q.Quran = (() => {
     function load() { a.src = src(); a.playbackRate = opts.speed; a.preservesPitch = true; }
     a.addEventListener('ended', () => {
       const wait = opts.gap ? Math.max(1500, a.duration * 1000 / opts.speed) : 250;
+      onDone && onDone(list[i]);
       gapT = setTimeout(() => {
         rep++;
         if (rep < opts.repeat) { a.currentTime = 0; a.play(); }
@@ -62,13 +63,18 @@ Q.Quran = (() => {
   }
 
   const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-  function listen(onText, onEnd) {
+  function listen(onText, onEnd, onErr) {
     if (!SR) return null;
-    const r = new SR(); r.lang = 'ar-SA'; r.continuous = true; r.interimResults = true;
-    let finalT = '';
-    r.onresult = (e) => { let interim = ''; for (let k = e.resultIndex; k < e.results.length; k++) { const t = e.results[k][0].transcript; if (e.results[k].isFinal) finalT += ' ' + t; else interim += ' ' + t; } onText(finalT + ' ' + interim); };
-    r.onend = () => onEnd && onEnd(finalT); r.onerror = () => {};
-    r.start(); return r;
+    let stopped = false, finalT = '', r;
+    const start = () => {
+      r = new SR(); r.lang = 'ar-SA'; r.continuous = true; r.interimResults = true; r.maxAlternatives = 1;
+      r.onresult = (e) => { let interim = ''; for (let k = e.resultIndex; k < e.results.length; k++) { const t = e.results[k][0].transcript; if (e.results[k].isFinal) finalT += ' ' + t; else interim += ' ' + t; } onText((finalT + ' ' + interim).trim()); };
+      r.onerror = (e) => { if (e.error === 'no-speech' || e.error === 'aborted') return; stopped = true; onErr && onErr(e.error); };
+      r.onend = () => { if (!stopped) { try { start(); } catch { stopped = true; onEnd && onEnd(finalT.trim()); } } else onEnd && onEnd(finalT.trim()); };
+      r.start();
+    };
+    start();
+    return { stop() { stopped = true; try { r.stop(); } catch { onEnd && onEnd(finalT.trim()); } } };
   }
   async function recorder() {
     if (!navigator.mediaDevices?.getUserMedia || !window.MediaRecorder) return null;

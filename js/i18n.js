@@ -65,7 +65,7 @@ Q.t = (k, vars) => {
   if (vars && typeof s === 'string') for (const [a, b] of Object.entries(vars)) s = s.replace('{' + a + '}', b);
   return s;
 };
-Q.L = (o, f = '') => (Q.lang === 'ar' ? o[f + 'ar'] ?? o[f + 'Ar'] : o[f + 'en'] ?? o[f + 'En']) ?? '';
+Q.L = (o, f = '') => { const ar = o[f + 'ar'] ?? o[f + 'Ar'] ?? ''; if (Q.lang === 'ar') return ar; return o[f + 'en'] || o[f + 'En'] || ar; };
 Q.num = (n) => Q.lang === 'ar' ? String(n).replace(/\d/g, d => '٠١٢٣٤٥٦٧٨٩'[d]) : String(n);
 Q.date = (iso) => { if (!iso) return ''; const d = new Date(iso + 'T12:00:00');
   return d.toLocaleDateString(Q.lang === 'ar' ? 'ar-EG' : 'en-GB', { day: 'numeric', month: 'long' }); };
