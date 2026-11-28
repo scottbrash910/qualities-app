@@ -1,6 +1,6 @@
 /* Offline shell. Bump VERSION on every deploy so phones pick up the new app. */
-const VERSION = 'qualities-v1';
-const SHELL = ['./', 'index.html', 'css/app.css', 'config.js', 'js/i18n.js', 'js/icons.js', 'js/data.js', 'js/quran.js', 'js/api.js', 'js/app.js', 'manifest.webmanifest', 'icons/icon-192.png', 'icons/gpis-logo.png'];
+const VERSION = 'qualities-v2';
+const SHELL = ['./', 'index.html', 'css/app.css', 'config.js', 'js/i18n.js', 'js/icons.js', 'js/data.js', 'js/surahs.js', 'js/quran.js', 'js/api.js', 'js/app.js', 'manifest.webmanifest', 'icons/icon-192.png', 'icons/gpis-logo.png'];
 self.addEventListener('install', e => e.waitUntil(caches.open(VERSION).then(c => c.addAll(SHELL)).then(() => self.skipWaiting())));
 self.addEventListener('activate', e => e.waitUntil(caches.keys().then(k => Promise.all(k.filter(x => x !== VERSION).map(x => caches.delete(x)))).then(() => self.clients.claim())));
 self.addEventListener('fetch', e => {
